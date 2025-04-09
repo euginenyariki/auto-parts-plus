@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Upload, Camera, Search, Info, X } from 'lucide-react';
+import { Upload, Camera, Search, Info, X, CarFront } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
+import CameraCapture from '@/components/CameraCapture';
 
 interface SimilarPart {
   id: string;
@@ -24,49 +25,62 @@ const PartIdentifier = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isIdentifying, setIsIdentifying] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-  // Sample data for similar parts (would come from API in real app)
+  // Enhanced car part images using Unsplash IDs
+  const carPartImages = [
+    'photo-1602982469756-461a3fcf896f', // Car engine close-up
+    'photo-1609521263047-f8f205293f24', // Chrome car parts
+    'photo-1583121274602-3e2820c69888', // Engine details
+    'photo-1619252584172-a83a949b6efd', // Car brakes
+    'photo-1619468129361-605ebea04b44', // Engine bay
+    'photo-1617886322168-72b886573c06', // Dashboard
+    'photo-1611016186353-9af58c69a533', // Suspension parts
+    'photo-1639414303304-6e53957c68e4', // Detailed engine components
+  ];
+
+  // Sample data for similar parts with improved images
   const similarParts: SimilarPart[] = [
     {
       id: '1',
       name: 'Front Brake Caliper',
-      image: 'photo-1487058792275-0ad4aaf24ca7',
+      image: carPartImages[3],
       compatibility: 'Honda Civic 2018-2022',
       price: 89.99
     },
     {
       id: '2',
       name: 'Brake Caliper Assembly',
-      image: 'photo-1488972685288-c3fd157d7c7a',
+      image: carPartImages[3],
       compatibility: 'Toyota Camry 2017-2021',
       price: 94.50
     },
     {
       id: '3',
       name: 'Performance Brake Caliper',
-      image: 'photo-1494891848038-7bd202a2afeb',
+      image: 'photo-1619468129361-605ebea04b44',
       compatibility: 'Multiple Models',
       price: 129.99
     },
     {
       id: '4',
       name: 'Rear Brake Caliper',
-      image: 'photo-1518005020951-eccb494ad742',
+      image: 'photo-1617886322168-72b886573c06',
       compatibility: 'Honda Accord 2019-2023',
       price: 79.95
     },
     {
       id: '5',
       name: 'OEM Replacement Caliper',
-      image: 'photo-1460574283810-2aab119d8511',
+      image: 'photo-1583121274602-3e2820c69888',
       compatibility: 'Nissan Altima 2016-2020',
       price: 84.75
     },
     {
       id: '6',
       name: 'Economy Brake Caliper',
-      image: 'photo-1452960962994-acf4fd70b632',
+      image: 'photo-1611016186353-9af58c69a533',
       compatibility: 'Multiple Models',
       price: 59.99
     },
@@ -139,15 +153,26 @@ const PartIdentifier = () => {
   };
 
   const handleTakePhoto = () => {
+    setShowCamera(true);
+  };
+
+  const handlePhotoCapture = (imageSrc: string) => {
+    setPreviewImage(imageSrc);
+    setShowCamera(false);
+    setShowResults(false);
     toast({
-      description: "Camera functionality would be implemented in a production app.",
+      title: "Photo captured",
+      description: "Ready to identify this part.",
     });
   };
 
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-2">Auto Part Identifier</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-2 flex items-center">
+          <CarFront className="mr-2 h-8 w-8 text-autoparts-blue" />
+          Auto Part Identifier
+        </h1>
         <p className="text-gray-600 mb-8">Upload a photo of your car part and our AI will identify it for you.</p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -235,7 +260,7 @@ const PartIdentifier = () => {
                   <div className="flex flex-col md:flex-row gap-6">
                     <div className="md:w-1/3">
                       <img 
-                        src={`https://source.unsplash.com/photo-1487058792275-0ad4aaf24ca7`} 
+                        src={`https://source.unsplash.com/${carPartImages[0]}`} 
                         alt="Identified part" 
                         className="w-full rounded-md"
                       />
@@ -327,7 +352,7 @@ const PartIdentifier = () => {
                   <div className="flex items-center gap-3">
                     <div className="w-16 h-16 bg-gray-100 rounded flex-shrink-0">
                       <img 
-                        src="https://source.unsplash.com/photo-1498050108023-c5249f4df085" 
+                        src={`https://source.unsplash.com/${carPartImages[2]}`} 
                         alt="Air Filter" 
                         className="w-full h-full object-cover rounded"
                       />
@@ -341,7 +366,7 @@ const PartIdentifier = () => {
                   <div className="flex items-center gap-3">
                     <div className="w-16 h-16 bg-gray-100 rounded flex-shrink-0">
                       <img 
-                        src="https://source.unsplash.com/photo-1485833077593-4278bba3f11f" 
+                        src={`https://source.unsplash.com/${carPartImages[4]}`} 
                         alt="Alternator" 
                         className="w-full h-full object-cover rounded"
                       />
@@ -355,7 +380,7 @@ const PartIdentifier = () => {
                   <div className="flex items-center gap-3">
                     <div className="w-16 h-16 bg-gray-100 rounded flex-shrink-0">
                       <img 
-                        src="https://source.unsplash.com/photo-1581090464777-f3220bbe1b8b" 
+                        src={`https://source.unsplash.com/${carPartImages[6]}`} 
                         alt="Fuel Pump" 
                         className="w-full h-full object-cover rounded"
                       />
@@ -378,6 +403,14 @@ const PartIdentifier = () => {
           </div>
         </div>
       </div>
+
+      {/* Camera Component */}
+      {showCamera && (
+        <CameraCapture 
+          onCapture={handlePhotoCapture}
+          onClose={() => setShowCamera(false)}
+        />
+      )}
     </Layout>
   );
 };

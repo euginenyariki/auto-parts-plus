@@ -4,25 +4,35 @@ import { Link } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Search, ArrowRight, Settings, Image, Database } from 'lucide-react';
+import { Search, ArrowRight, Settings, Image, Database, CarFront } from 'lucide-react';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const Index = () => {
-  // Popular parts categories
-  const categories = [
-    { name: 'Engine Components', image: 'photo-1518005020951-eccb494ad742', description: 'Pistons, valves, camshafts, and more' },
-    { name: 'Brake Systems', image: 'photo-1460574283810-2aab119d8511', description: 'Pads, rotors, calipers, and lines' },
-    { name: 'Electrical Parts', image: 'photo-1487058792275-0ad4aaf24ca7', description: 'Starters, alternators, and sensors' },
-    { name: 'Suspension & Steering', image: 'photo-1505373877841-8d25f7d46678', description: 'Shocks, struts, and control arms' },
-    { name: 'Transmission Parts', image: 'photo-1488972685288-c3fd157d7c7a', description: 'Fluid, filters, and gaskets' },
-    { name: 'Exhaust System', image: 'photo-1494891848038-7bd202a2afeb', description: 'Mufflers, catalytic converters, and pipes' },
+  // Enhanced car images collection using Unsplash IDs
+  const carImages = [
+    'photo-1551830820-330a71b99659', // Modern car front view
+    'photo-1526726538690-5cbf956ae2fd', // Engine close-up
+    'photo-1503736334956-4c8f8e92946d', // Modern car side view
+    'photo-1552519507-da3b142c6e3d', // Sports car front view
+    'photo-1571127236794-81c0bbfe1ce3', // Dashboard view
   ];
 
-  // Featured parts
+  // Popular parts categories with improved images
+  const categories = [
+    { name: 'Engine Components', image: 'photo-1526726538690-5cbf956ae2fd', description: 'Pistons, valves, camshafts, and more' },
+    { name: 'Brake Systems', image: 'photo-1619252584172-a83a949b6efd', description: 'Pads, rotors, calipers, and lines' },
+    { name: 'Electrical Parts', image: 'photo-1617886322168-72b886573c06', description: 'Starters, alternators, and sensors' },
+    { name: 'Suspension & Steering', image: 'photo-1583121274602-3e2820c69888', description: 'Shocks, struts, and control arms' },
+    { name: 'Transmission Parts', image: 'photo-1619468129361-605ebea04b44', description: 'Fluid, filters, and gaskets' },
+    { name: 'Exhaust System', image: 'photo-1602982469756-461a3fcf896f', description: 'Mufflers, catalytic converters, and pipes' },
+  ];
+
+  // Featured parts with improved images
   const featuredParts = [
-    { name: 'OEM Air Filter', image: 'photo-1581090464777-f3220bbe1b8b', price: 24.99, rating: 4.8 },
-    { name: 'Performance Brake Pads', image: 'photo-1469041797191-50ace28483c3', price: 89.95, rating: 4.7 },
-    { name: 'Spark Plug Set', image: 'photo-1498050108023-c5249f4df085', price: 32.50, rating: 4.9 },
-    { name: 'Oil Filter', image: 'photo-1485827404703-89b55fcc595e', price: 12.99, rating: 4.6 },
+    { name: 'OEM Air Filter', image: 'photo-1639414303304-6e53957c68e4', price: 24.99, rating: 4.8 },
+    { name: 'Performance Brake Pads', image: 'photo-1619252584172-a83a949b6efd', price: 89.95, rating: 4.7 },
+    { name: 'Spark Plug Set', image: 'photo-1602982469756-461a3fcf896f', price: 32.50, rating: 4.9 },
+    { name: 'Oil Filter', image: 'photo-1583121274602-3e2820c69888', price: 12.99, rating: 4.6 },
   ];
 
   return (
@@ -47,11 +57,42 @@ const Index = () => {
             </div>
             <div className="md:w-1/2 flex justify-center">
               <img 
-                src={`https://source.unsplash.com/1481062-992x560`} 
-                alt="Car parts collection" 
+                src={`https://source.unsplash.com/${carImages[0]}`} 
+                alt="Modern car" 
                 className="rounded-lg shadow-xl max-w-full h-auto"
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Car Showcase Carousel */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">Explore Our Vehicle Parts Collection</h2>
+          
+          <div className="mx-auto max-w-5xl px-12">
+            <Carousel className="w-full">
+              <CarouselContent>
+                {carImages.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <div className="p-1">
+                      <Card>
+                        <CardContent className="flex aspect-[16/9] items-center justify-center p-0">
+                          <img 
+                            src={`https://source.unsplash.com/${image}`}
+                            alt={`Car showcase ${index + 1}`}
+                            className="w-full h-full object-cover rounded-md"
+                          />
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="lg:-left-12 left-2" />
+              <CarouselNext className="lg:-right-12 right-2" />
+            </Carousel>
           </div>
         </div>
       </section>
@@ -168,7 +209,7 @@ const Index = () => {
             </div>
             <div className="text-center p-6">
               <div className="bg-autoparts-blue rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-4">
-                <Settings className="h-8 w-8 text-white" />
+                <CarFront className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-xl font-bold mb-2">Expert Support</h3>
               <p className="text-gray-600">Technical assistance from automotive specialists when you need it.</p>
