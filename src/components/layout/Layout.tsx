@@ -34,6 +34,11 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      {/* Background pattern */}
+      <div className="fixed inset-0 z-[-1] opacity-5">
+        <div className="absolute inset-0 bg-repeat" style={{ backgroundImage: 'url(https://source.unsplash.com/photo-1602982469756-461a3fcf896f)', backgroundSize: '400px' }}></div>
+      </div>
+      
       <Header />
       <main className="flex-grow">
         {children}

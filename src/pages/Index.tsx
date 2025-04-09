@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Search, ArrowRight, Settings, Image, Database, CarFront } from 'lucide-react';
+import { Search, ArrowRight, Settings, Image, Database, CarFront, Star } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const Index = () => {
@@ -15,6 +14,8 @@ const Index = () => {
     'photo-1503736334956-4c8f8e92946d', // Modern car side view
     'photo-1552519507-da3b142c6e3d', // Sports car front view
     'photo-1571127236794-81c0bbfe1ce3', // Dashboard view
+    'photo-1492144534655-ae79c964c9d7', // Red sports car
+    'photo-1511919884226-fd3cad34687c', // Classic muscle car
   ];
 
   // Popular parts categories with improved images
@@ -33,6 +34,28 @@ const Index = () => {
     { name: 'Performance Brake Pads', image: 'photo-1619252584172-a83a949b6efd', price: 89.95, rating: 4.7 },
     { name: 'Spark Plug Set', image: 'photo-1602982469756-461a3fcf896f', price: 32.50, rating: 4.9 },
     { name: 'Oil Filter', image: 'photo-1583121274602-3e2820c69888', price: 12.99, rating: 4.6 },
+  ];
+
+  // Testimonials with user images
+  const testimonials = [
+    { 
+      name: "Michael Johnson", 
+      role: "Car Enthusiast", 
+      image: "photo-1560250097-0b93528c311a", 
+      text: "AutoPartsFinder's visual recognition tool saved me hours of searching. I just uploaded a photo of the broken part and got matches instantly!" 
+    },
+    { 
+      name: "Sarah Williams", 
+      role: "DIY Mechanic", 
+      image: "photo-1494790108377-be9c29b29330", 
+      text: "The catalog is comprehensive and the filtering options make it easy to find exactly what I need for my restoration project." 
+    },
+    { 
+      name: "David Chen", 
+      role: "Professional Mechanic", 
+      image: "photo-1500648767791-00dcc994a43e", 
+      text: "I recommend this site to all my customers who want to learn more about the parts they need. The detailed descriptions and images are excellent." 
+    },
   ];
 
   return (
@@ -184,6 +207,42 @@ const Index = () => {
             <Button asChild>
               <Link to="/catalog">View All Parts</Link>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* New: Testimonials Section */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-2 text-center">What Our Users Say</h2>
+          <p className="text-gray-600 text-center mb-8">Trusted by thousands of mechanics and DIY enthusiasts</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="h-14 w-14 rounded-full overflow-hidden mr-4">
+                      <img 
+                        src={`https://source.unsplash.com/${testimonial.image}`} 
+                        alt={testimonial.name} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-bold">{testimonial.name}</h3>
+                      <p className="text-sm text-gray-500">{testimonial.role}</p>
+                    </div>
+                  </div>
+                  <div className="flex mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                    ))}
+                  </div>
+                  <p className="text-gray-600 italic">"{testimonial.text}"</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
