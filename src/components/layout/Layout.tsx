@@ -4,6 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { Button } from '@/components/ui/button';
 import { ArrowUp } from 'lucide-react';
+import CartIcon from '@/components/cart/CartIcon';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -56,6 +57,11 @@ const Layout = ({ children }: LayoutProps) => {
           <ArrowUp className="h-5 w-5" />
         </Button>
       )}
+
+      {/* Fixed Cart Button */}
+      <div className="fixed bottom-6 left-6 z-50">
+        <CartIcon />
+      </div>
     </div>
   );
 };

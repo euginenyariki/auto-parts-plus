@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -8,9 +7,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { Search, Filter } from 'lucide-react';
+import { Search, Filter, ShoppingCart } from 'lucide-react';
+import { useCart } from '@/contexts/CartContext';
 
 const Catalog = () => {
+  const { addItem } = useCart();
+  
   const parts = [
     { id: 1, name: "OEM Air Filter", image: "photo-1581090464777-f3220bbe1b8b", price: 24.99, rating: 4.8, brand: "FilterMaster" },
     { id: 2, name: "Performance Brake Pads", image: "photo-1469041797191-50ace28483c3", price: 89.95, rating: 4.7, brand: "BrakeTech" },
@@ -49,6 +51,15 @@ const Catalog = () => {
     "TempControl",
     "BeltMaster"
   ];
+
+  const handleAddToCart = (part: typeof parts[0]) => {
+    addItem({
+      id: part.id,
+      name: part.name,
+      image: part.image,
+      price: part.price
+    });
+  };
 
   return (
     <Layout>
@@ -186,7 +197,12 @@ const Catalog = () => {
                       </div>
                     </div>
                     <div className="mt-3 space-y-2">
-                      <Button className="w-full bg-autoparts-blue hover:bg-autoparts-lightblue">Add to Cart</Button>
+                      <Button 
+                        className="w-full bg-autoparts-blue hover:bg-autoparts-lightblue"
+                        onClick={() => handleAddToCart(part)}
+                      >
+                        <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
+                      </Button>
                       <Button variant="outline" className="w-full">View Details</Button>
                     </div>
                   </CardContent>
